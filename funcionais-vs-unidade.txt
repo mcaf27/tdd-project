@@ -1,0 +1,15 @@
+Enquanto testes funcionais tem como propósito testar o comportamento correto no ponto de vista do
+usuário, simulando uma história de usuário para realizar esses testes, os de unidade verificam o
+comportamento do software no nível do desenvolvedor, checando por exemplo quais métodos possuem
+erros, para que eles possam ser modificados e o teste passe.
+
+Os testes de unidade devem ser criados de forma que eles sejam rápidos de serem testados, pois
+isso deve acontecer frequentemente, toda vez que uma mudança for implementada no código (para testar
+a nova mudança e também para verificar que nenhuma regressão foi introduzida). Eles também devem ser
+independentes, determinísticos, auto-verificáveis e escritos o quanto antes (princípios FIRST), para
+facilitar o desenvolvimento e a corretude do software.
+
+Já testes funcionais são vistos como testes de caixa preta, em que quem está testando não tem nenhum
+conhecimento sobre como o sistema é implementado, e testa apenas a interface disponível para o usuário,
+do ponto de vista do usuário. Esse tipo de teste é em geral mais lento, e pode envolver dependências
+externas, por isso deve ser realizado com menos frequência que um teste de unidade.
