@@ -1,0 +1,14 @@
+O processo TDD normal é composto de:
+	1 - Escrever testes de unidade
+	2 - Rodar os testes, e se eles falharem, escrever o código mínimo
+	para eles passarem
+	3 - Refatorar o quanto necessário
+
+Utilizando testes de unidade e testes funcionais, o processo fica diferente:
+	1 - Escrever os testes funcionais
+	2 - Rodar os testes funcionais, e caso eles falharem:
+		a) Escrever testes de unidade
+		b) Rodar os testes de unidade, e se eles falharem, escrever
+		o código mínimo para que eles passem
+		c) Refatorar o quanto necessário
+	3 - Refatorar o código.
