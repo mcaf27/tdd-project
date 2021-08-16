@@ -61,18 +61,6 @@ class SendLoginEmailViewTest(TestCase):
         )
         self.assertEqual(message.tags, "success")
 
-    #@patch('accounts.views.messages')
-    #def test_adds_success_message_with_mocks(self, mock_messages):
-    #    response = self.client.post('/accounts/send_login_email', data={
-    #        'email': 'edith@example.com'
-    #    })
-    #
-    #    expected = "Check your email, we've sent you a link you can use to log in."
-    #    self.assertEqual(
-    #        mock_messages.success.call_args,
-    #        call(response.wsgi_request, expected),
-    #    )
-
     def test_creates_token_associated_with_email(self):
         self.client.post('/accounts/send_login_email', data={
             'email': 'edith@example.com'
@@ -91,3 +79,11 @@ class SendLoginEmailViewTest(TestCase):
         expected_url = f'http://testserver/accounts/login?token={token.uid}'
         (subject, body, from_email, to_list), kwargs = mock_send_mail.call_args
         self.assertIn(expected_url, body)
+
+    @patch('accounts.views.auth')  
+    def test_calls_authenticate_with_uid_from_get_request(self, mock_auth):  
+        self.client.get('/accounts/login?token=abcd123')
+        self.assertEqual(
+            mock_auth.authenticate.call_args,  
+            call(uid='abcd123')  
+        )
