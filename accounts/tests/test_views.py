@@ -1,7 +1,7 @@
 from django.test import TestCase
 import accounts.views
 
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 class SendLoginEmailViewTest(TestCase):
 
@@ -10,6 +10,7 @@ class SendLoginEmailViewTest(TestCase):
             'email': 'edith@example.com'
         })
         self.assertRedirects(response, '/')
+
     def test_sends_mail_to_address_from_post(self):
         self.send_mail_called = False
 
@@ -43,3 +44,27 @@ class SendLoginEmailViewTest(TestCase):
         self.assertEqual(subject, 'Your login link for Superlists')
         self.assertEqual(from_email, 'noreply@superlists')
         self.assertEqual(to_list, ['edith@example.com'])
+
+    def test_adds_success_message(self):
+        response = self.client.post('/accounts/send_login_email', data={
+            'email': 'edith@example.com'
+        }, follow=True)
+
+        message = list(response.context['messages'])[0]
+        self.assertEqual(
+            message.message,
+            "Check your email, we've sent you a link you can use to log in."
+        )
+        self.assertEqual(message.tags, "success")
+
+    #@patch('accounts.views.messages')
+    #def test_adds_success_message_with_mocks(self, mock_messages):
+    #    response = self.client.post('/accounts/send_login_email', data={
+    #        'email': 'edith@example.com'
+    #    })
+    #
+    #    expected = "Check your email, we've sent you a link you can use to log in."
+    #    self.assertEqual(
+    #        mock_messages.success.call_args,
+    #        call(response.wsgi_request, expected),
+    #    )
